@@ -7,3 +7,8 @@ class Contact(models.Model):
     Email  = models.CharField(max_length=200)
     Subject = models.CharField(max_length=200)
     Message = models.TextField()
+
+class Product(models.Model):
+    Pname =  models.CharField(max_length=200)
+    Description = models.TextField()
+    image = models.ImageField(upload_to="product")

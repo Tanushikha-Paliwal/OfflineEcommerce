@@ -1,28 +1,31 @@
-from django.shortcuts import render,redirect
-from . models import *
+from django.shortcuts import render, redirect
+from .models import *
 from django.contrib import messages
 
 # Create your views here.
 
+
 def index(request):
-    return render(request , "home.html")
+    product = Product.objects.all()
+    return render(request, "home.html" , {"product":product})
+
 
 def contact(request):
-    return render(request , "contact.html")
+    return render(request, "contact.html")
+
 
 def about(request):
-    return render(request , "about.html")
+    return render(request, "about.html")
 
 
 def contact_user(request):
     if request.method == "POST":
-        name = request.POST['name']
-        email = request.POST['email']
-        subject = request.POST['subject']
-        message = request.POST['message']
+        name = request.POST["name"]
+        email = request.POST["email"]
+        subject = request.POST["subject"]
+        message = request.POST["message"]
 
-        Contact.objects.create(Name=name , Email=email , Subject=subject , Message=message)
-        messages.success(request , "You are in the Que")
+        Contact.objects.create(Name=name, Email=email, Subject=subject, Message=message)
+        messages.success(request, "You are in the Que")
         details = Contact.objects.all()
-        return render( request,"contact.html" , {"details":details})
-        
+        return render(request, "contact.html", {"details": details})
