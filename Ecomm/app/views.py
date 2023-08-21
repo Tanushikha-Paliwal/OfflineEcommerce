@@ -24,8 +24,11 @@ def contact_user(request):
         email = request.POST["email"]
         subject = request.POST["subject"]
         message = request.POST["message"]
-
-        Contact.objects.create(Name=name, Email=email, Subject=subject, Message=message)
-        messages.success(request, "You are in the Que")
-        details = Contact.objects.all()
-        return render(request, "contact.html", {"details": details})
+        if Contact.objects.filter(Email=email).exists():
+            messages.error(request, "Email  already exists")
+            return redirect("/contact/")
+        else:
+            Contact.objects.create(Name=name, Email=email, Subject=subject, Message=message)
+            messages.success(request, "You are in the Que")
+            details = Contact.objects.all()
+            return render(request, "contact.html", {"details": details})
